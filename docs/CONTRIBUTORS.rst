@@ -1,5 +1,5 @@
 Contributors
-************
+============
 
  - Dimitris Moraitis, dimo at unweb.me
  - Christos Psalits, cpsaltis at unweb.me
