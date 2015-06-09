@@ -39,6 +39,7 @@ setup(name='unweb.iptc',
           'Products.CMFPlone',
           'Products.ATContentTypes',
           'IPTCInfo',
+          'py-dateutil',
       ],
       extras_require={
           'test': ['plone.app.testing',

@@ -1,6 +1,13 @@
 Changelog
 =========
 
+dev
+---
+
+- #1 Set the CreationDate based on information given in IPTC records
+  `Date Created` and `Time Created` (requres py-dateutil for
+  parsing the timezone information)  [fRiSi]
+
 0.3.1 (2012-12-21)
 ------------------
 
