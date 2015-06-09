@@ -1,7 +1,6 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.3.1'
 
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
@@ -16,7 +15,7 @@ long_description = (
 
 
 setup(name='unweb.iptc',
-      version=version,
+      version='0.3.1',
       description="IPTC metadata extraction and storage for images in Plone",
       long_description=long_description,
       # Get more strings from
@@ -41,9 +40,9 @@ setup(name='unweb.iptc',
           'Products.ATContentTypes',
           'IPTCInfo',
       ],
-      extras_require = {
+      extras_require={
           'test': ['plone.app.testing',
-                   'interlude',]
+                   'interlude', ]
       },
       entry_points="""
       # -*- Entry points: -*-
@@ -51,6 +50,4 @@ setup(name='unweb.iptc',
       [z3c.autoinclude.plugin]
       target = plone
       """,
-      setup_requires=["PasteScript"],
-      paster_plugins=["ZopeSkel"],
       )
