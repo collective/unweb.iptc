@@ -2,7 +2,6 @@ from Products.ATContentTypes.interface import IATImage
 from Products.Archetypes.interfaces import IObjectEditedEvent
 from Products.Archetypes.interfaces import IObjectInitializedEvent
 from Products.CMFCore.utils import getToolByName
-from datetime import datetime
 from dateutil import parser
 from iptcinfo import IPTCInfo
 from logging import getLogger
@@ -95,11 +94,8 @@ def readIPTC(obj, event):
             # unfortunately does not work on many systems
             # see http://stackoverflow.com/a/8525115/810427
             created = parser.parse(creation_timestamp)
-
-        elif creation_date is not None:
-            created = datetime.strptime(creation_date, '%Y%m%d')
         else:
-            # no iptc creation date info can be found, use exif creation date
+            # no iptc creation date+time can be found, use exif creation date
             created = obj.getEXIFOrigDate()
 
         obj.setCreationDate(created)
