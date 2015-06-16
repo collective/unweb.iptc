@@ -15,7 +15,7 @@ long_description = (
 
 
 setup(name='unweb.iptc',
-      version='0.3.1',
+      version='0.4',
       description="IPTC metadata extraction and storage for images in Plone",
       long_description=long_description,
       # Get more strings from

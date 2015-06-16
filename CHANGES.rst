@@ -1,8 +1,8 @@
 Changelog
 =========
 
-dev
----
+0.4 (2015-06-16)
+----------------
 
 - #1 Set the CreationDate based on information given in IPTC records
   `Date Created` and `Time Created` (requres py-dateutil for
