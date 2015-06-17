@@ -1,6 +1,14 @@
 Changelog
 =========
 
+dev
+---
+
+- Modernize buildout configuration [hvelarde]
+
+- Fix unit test (sample.jpg contained IPTC key 221
+  that broke IPTCInfo) [fRiSi]
+
 0.4 (2015-06-16)
 ----------------
 

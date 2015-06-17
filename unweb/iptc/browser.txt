@@ -39,8 +39,42 @@ Check if we got the correct IPTC data from the sample file
     >>> pkg_home = Common.package_home({'__name__': 'unweb.iptc'})
     >>> sample_path = os.path.join(pkg_home, 'sample.jpg')
     >>> iptc_data = IPTCInfo(sample_path, force=True).data
-    >>> iptc_data
-    {116: 'WORLDWIDE', 101: 'Lefkada', 105: 'Egremnoi beach, Lefkada', 110: 'Valentini Karamanoli / Invision', 80: 'Valentine Karamanoli', 92: 'Egremnoi', 115: 'invision-images.com ', 20: [], 118: [], 55: '20090820', 120: 'Lefkada, Ionian islands. Greece. View of Egremnoi beach.', 25: ['Lefkada', 'island', 'greece', 'greek', 'beach', 'egremnoi', 'summer', 'sand', 'holidays', 'vacations', 'white', 'sea', 'water', 'destination', 'travel', 'boat', 'yacht', 'nature', 'natural', 'landscape'], 90: 'Lefkada', 60: '112738+0200', 221: '0:0:0:-00001', 62: '20090820'}
+    >>> from pprint import pprint
+    >>> pprint(iptc_data)
+    {20: [],
+     25: ['Lefkada',
+          'island',
+          'greece',
+          'greek',
+          'beach',
+          'egremnoi',
+          'summer',
+          'sand',
+          'holidays',
+          'vacations',
+          'white',
+          'sea',
+          'water',
+          'destination',
+          'travel',
+          'boat',
+          'yacht',
+          'nature',
+          'natural',
+          'landscape'],
+     55: '20090820',
+     60: '112738+0200',
+     62: '20090820',
+     80: 'Valentine Karamanoli',
+     90: 'Lefkada',
+     92: 'Egremnoi',
+     101: 'Lefkada',
+     105: 'Egremnoi beach, Lefkada',
+     110: 'Valentini Karamanoli / Invision',
+     115: 'invision-images.com ',
+     116: 'WORLDWIDE',
+     118: [],
+     120: 'Lefkada, Ionian islands. Greece. View of Egremnoi beach.'}
 
 So let's add an our image.
 
@@ -97,7 +131,20 @@ See if the image file's IPTC metadata have been updated
     >>> fp.write(iu.read())
     >>> fp.close()
     >>> new_iptc_data = IPTCInfo(temp_path, force=True).data
-    >>> new_iptc_data
-    {116: 'New copyright notice', 100: 'New location', 101: 'New location', 105: 'Egremnoi beach, Lefkada', 5: 'New title', 110: 'Valentini Karamanoli / Invision', 60: '112738+0200', 80: 'New creator', 115: 'invision-images.com ', 20: [], 118: [], 55: '20090820', 120: 'New description', 25: ['summer', 'egremnoi', 'sea', 'greece', 'landscape', 'travel', 'destination', 'boat', 'white', 'beach', 'nature', 'Lefkada', 'water', 'vacations', 'keyword3', 'keyword2', 'keyword1', 'holidays', 'natural', 'island', 'yacht', 'greek', 'sand'], 90: 'New location', 92: 'New location', 221: '0:0:0:-00001', 62: '20090820', 95: 'New location'}
+    >>> new_iptc_data['object name']
+    'New title'
+    >>> new_iptc_data['caption/abstract']
+    'New description'
+    >>> new_iptc_data['by-line']
+    'New creator'
+    >>> new_iptc_data['copyright notice']
+    'New copyright notice'
+    >>> new_iptc_data['city']
+    'New location'
+    >>> new_iptc_data['sub-location']
+    'New location'
+    >>> set(['keyword1', 'keyword2', 'keyword3']).issubset(set(new_iptc_data['keywords']))
+    True
+
 
 It works!
