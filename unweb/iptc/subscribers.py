@@ -1,14 +1,15 @@
-from Products.ATContentTypes.interface import IATImage
-from Products.Archetypes.interfaces import IObjectEditedEvent
-from Products.Archetypes.interfaces import IObjectInitializedEvent
-from Products.CMFCore.utils import getToolByName
+# -*- coding: utf-8 -*-
 from dateutil import parser
 from iptcinfo import IPTCInfo
 from logging import getLogger
+from Products.Archetypes.interfaces import IObjectEditedEvent
+from Products.Archetypes.interfaces import IObjectInitializedEvent
+from Products.ATContentTypes.interface import IATImage
+from Products.CMFCore.utils import getToolByName
 from zope.component import adapter
+
 import os
 import tempfile
-
 
 try:
     from unweb.watermark.extender import ImageExtender
@@ -19,10 +20,11 @@ except ImportError:
 
 logger = getLogger('unweb.iptc')
 
+
 @adapter(IATImage, IObjectInitializedEvent)
 def readIPTC(obj, event):
-    """ Load all the basic IPTC metadata from the Image file and store them in 
-        the relevant metadata fields (title, description, keywords, creator, 
+    """ Load all the basic IPTC metadata from the Image file and store them in
+        the relevant metadata fields (title, description, keywords, creator,
         copyright, creation-date) """
     img = obj.getImage()
     filename = img.getFilename()
@@ -59,7 +61,6 @@ def readIPTC(obj, event):
         except UnicodeDecodeError:
             obj.setCreators([creator.decode('utf-8', 'ignore')])
 
-
     copyright = info.data['copyright notice']
     if copyright:
         try:
@@ -85,8 +86,8 @@ def readIPTC(obj, event):
         except UnicodeDecodeError:
             obj.setLocation('%s %s %s %s %s' % (country.decode('utf-8', 'ignore'), countryCode.decode('utf-8', 'ignore'), state.decode('utf-8', 'ignore'), city.decode('utf-8', 'ignore'), location.decode('utf-8', 'ignore')))
 
-    creation_date = info.data['date created'] # eg '20090820'
-    creation_time = info.data['time created'] # eg '112738+0200'
+    creation_date = info.data['date created']  # eg '20090820'
+    creation_time = info.data['time created']  # eg '112738+0200'
     try:
         if creation_date is not None and creation_time is not None:
             creation_timestamp = '{0} {1}'.format(creation_date, creation_time)
@@ -106,9 +107,10 @@ def readIPTC(obj, event):
 
     obj.reindexObject()
 
+
 @adapter(IATImage, IObjectEditedEvent)
 def updateIPTC(obj, event):
-    """ On edit store the updated image metadata inside the image file itself in 
+    """ On edit store the updated image metadata inside the image file itself in
         IPTC format """
 
     if WATERMARK:
@@ -120,7 +122,6 @@ def updateIPTC(obj, event):
         img = ImageExtender(obj).fields[0].get(obj)
     else:
         img = obj.getImage()
-
 
     fd, filename = tempfile.mkstemp('_' + obj.getId())
     os.close(fd)
@@ -143,7 +144,7 @@ def updateIPTC(obj, event):
     info.save()
 
     if WATERMARK:
-    # Set the original image field to have the updated IPTC
+        # Set the original image field to have the updated IPTC
         fin = open(filename)
         ImageExtender(obj).fields[0].set(obj, fin.read())
         fin.close()

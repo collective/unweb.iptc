@@ -2,7 +2,7 @@
  unweb.iptc
 ======================
 
-This is a functional test for the unweb.iptc package for Plone. 
+This is a functional test for the unweb.iptc package for Plone.
 
 We use zope.testbrowser to simulate browser interaction in order to show how
 the unweb.iptc commenting works.
@@ -18,10 +18,10 @@ First we have to set up some things and login.
     >>> browser = Browser(app)
     >>> browser.handleErrors = False
     >>> browser.addHeader('Authorization', 'Basic admin:secret')
-    >>> portal = layer['portal']    
+    >>> portal = layer['portal']
     >>> portal_url = 'http://nohost/plone'
 
-By default, only HTTP error codes (e.g. 500 Server Side Error) are shown when an 
+By default, only HTTP error codes (e.g. 500 Server Side Error) are shown when an
 error occurs on the server. To see more details, set handleErrors to False:
 
     >>> browser.handleErrors = False
